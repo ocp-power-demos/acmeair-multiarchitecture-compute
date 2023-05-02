@@ -10,7 +10,10 @@ ARG CONFIG_DIRECTORY
 
 # Install unzip; needed to unzip Open Liberty
 USER 0
-RUN yum -y install unzip
+RUN dnf clean all \
+    && rm -r /var/cache/dnf \
+    && dnf upgrade \
+    && dnf -y install unzip
 USER 1001
 
 # Copy in a server.xml to start server with correct features set
@@ -37,9 +40,9 @@ COPY --chown=1001:0 --from=buildLiberty_minify /tmp/ol /opt/ol/
 #COPY /jdeps/java_modules.txt /tmp
 
 COPY --chown=1001:0 ${WAR_FILE} /tmp
-COPY /jdeps/getJavaDependencies.sh /tmp
-COPY /jdeps/java_modules_append.txt /tmp
-COPY /jdeps/java_modules_exclude.txt /tmp
+COPY jdeps/getJavaDependencies.sh /tmp
+COPY jdeps/java_modules_append.txt /tmp
+COPY jdeps/java_modules_exclude.txt /tmp
 
 # Scan the jars in /opt/ol/wlp/lib, the jars in the app at WEB-INF/lib
 # and the classes in WEB-INF/classes for Java Module Dependencies (jdeps)

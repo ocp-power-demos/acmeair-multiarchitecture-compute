@@ -6,7 +6,7 @@ The application is forked from https://github.com/blueperf/acmeair-monolithic-ja
 
 The application depends on: 
 
-> mongodb     | 4.4.18 | podmam pull icr.io/ppc64le-oss/mongodb-ppc64le:4.4.18
+> mongodb     | 4.4.18 | podman pull icr.io/ppc64le-oss/mongodb-ppc64le:4.4.18
 > openliberty | latest | podman pull icr.io/appcafe/open-liberty:kernel-slim-java11-openj9-ubi
 > ubi-minimal | latest | podman pull registry.access.redhat.com/ubi8/ubi-minimal
 
