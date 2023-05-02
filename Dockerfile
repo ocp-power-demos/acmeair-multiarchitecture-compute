@@ -65,8 +65,7 @@ RUN /opt/java/openjdk/bin/jlink --no-header-files \
 FROM registry.access.redhat.com/ubi8/ubi-minimal as buildscc
 
 RUN mkdir -p /output/workarea && mkdir -p /output/.classCache \
-    && chown -R 1001:0 /output && chmod -R g+rw /output \
-    && dnf upgrade
+    && chown -R 1001:0 /output && chmod -R g+rw /output
 
 USER 1001
 
