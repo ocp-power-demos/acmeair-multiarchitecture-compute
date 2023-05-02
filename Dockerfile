@@ -12,7 +12,6 @@ ARG CONFIG_DIRECTORY
 USER 0
 RUN dnf clean all \
     && rm -r /var/cache/dnf \
-    && dnf upgrade \
     && dnf install -y unzip
 USER 1001
 
@@ -66,7 +65,8 @@ RUN /opt/java/openjdk/bin/jlink --no-header-files \
 FROM registry.access.redhat.com/ubi8/ubi-minimal as buildscc
 
 RUN mkdir -p /output/workarea && mkdir -p /output/.classCache \
-    && chown -R 1001:0 /output && chmod -R g+rw /output 
+    && chown -R 1001:0 /output && chmod -R g+rw /output \
+    && dnf upgrade
 
 USER 1001
 
