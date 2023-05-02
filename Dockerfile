@@ -13,7 +13,7 @@ USER 0
 RUN dnf clean all \
     && rm -r /var/cache/dnf \
     && dnf upgrade \
-    && dnf -y install unzip
+    && dnf install -y unzip
 USER 1001
 
 # Copy in a server.xml to start server with correct features set
@@ -32,7 +32,7 @@ FROM ibmsemeruruntime/open-11-jdk:ubi-jdk as buildjre
 
 ARG WAR_FILE
 
-RUN yum -y install unzip
+RUN dnf install -y unzip
 
 COPY --chown=1001:0 --from=buildLiberty_minify /tmp/ol /opt/ol/
 # If you already know the Java modules required, you can list them in jdeps/java_modules.txt and
