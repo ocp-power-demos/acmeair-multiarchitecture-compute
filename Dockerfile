@@ -6,7 +6,7 @@ RUN mvn clean package -DskipTests
 ### CREATE SMALL LIBERTY IMAGE ###
 FROM icr.io/appcafe/open-liberty:kernel-slim-java11-openj9-ubi as buildLiberty_minify
 
-ARG CONFIG_DIRECTORY source/src/main/liberty/config
+ENV CONFIG_DIRECTORY=source/src/main/liberty/config
 
 # Install unzip; needed to unzip Open Liberty
 USER 0
@@ -29,7 +29,7 @@ RUN unzip -q /tmp/ol_minified.zip -d /tmp/ol
 ### CREATE SMALL JRE IMAGE ###
 FROM ibmsemeruruntime/open-11-jdk:ubi-jdk as buildjre
 
-ARG WAR_FILE source/target/acmeair-monolithic-jakarta.war
+ENV WAR_FILE=source/target/acmeair-monolithic-jakarta.war
 
 RUN dnf install -y unzip
 
@@ -70,8 +70,8 @@ RUN mkdir -p /output/workarea && mkdir -p /output/.classCache \
 
 USER 1001
 
-ARG CONFIG_DIRECTORY source/src/main/liberty/config
-ARG WAR_FILE source/target/acmeair-monolithic-jakarta.war
+ENV CONFIG_DIRECTORY=source/src/main/liberty/config
+ENV WAR_FILE=source/target/acmeair-monolithic-jakarta.war
 
 ### copy in the minified java11 jre
 COPY --chown=1001:0 --from=buildjre /opt/jdk11-minified /opt/jdk11-minified
@@ -87,7 +87,7 @@ ENV JAVA_HOME=/opt/jdk11-minified
 
 #### Run populate_scc.sh script
 ENV PATH=/opt/ol/wlp/bin:/opt/ol/helpers/build:/opt/jdk11-minified/bin:$PATH
-ARG VERBOSE=true
+ENV VERBOSE=true
 RUN populate_scc.sh -i 1
 
 ### FINAL BASE IMAGE ###
@@ -100,7 +100,7 @@ RUN mkdir -p /output/workarea && mkdir -p /output/.classCache \
 
 USER 1001
 
-ARG CONFIG_DIRECTORY source/src/main/liberty/config
+ENV CONFIG_DIRECTORY=source/src/main/liberty/config
 
 ### copy in the minified java11 jre
 COPY --chown=1001:0 --from=buildjre /opt/jdk11-minified /opt/jdk11-minified
@@ -119,13 +119,13 @@ ENV PATH=/opt/ol/wlp/bin:/opt/ol/helpers/build:/opt/jdk11-minified/bin:$PATH
 ENV JAVA_HOME=/opt/jdk11-minified
 ENV OPENJ9_JAVA_OPTIONS="-XX:+IgnoreUnrecognizedVMOptions -XX:+IdleTuningGcOnIdle -Xshareclasses:name=liberty,readonly,cacheDir=/output/.classCache -Dosgi.checkConfiguration=false"
 
-ARG CONFIG_DIRECTORY source/src/main/liberty/config
-ARG WAR_FILE source/target/acmeair-monolithic-jakarta.war
+ENV CONFIG_DIRECTORY=source/src/main/liberty/config
+ENV WAR_FILE=source/target/acmeair-monolithic-jakarta.war
 
 COPY --chown=1001:0 ${CONFIG_DIRECTORY}/* /opt/ol/wlp/usr/servers/defaultServer/
 COPY --chown=1001:0 ${WAR_FILE} /opt/ol/wlp/usr/servers/defaultServer/apps/
 
-ARG VERBOSE=true
+ENV VERBOSE=true
 RUN populate_scc.sh -i 1
 
 # Set SCC to readonly
