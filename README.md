@@ -33,10 +33,16 @@ Note, the tests are commented out as they depend on out of data MongoDb test dep
 ❯ export MONGODDB_PASS=$(echo NOT_REAL )
 ```
 
-3. Run the kustomize
+3. Run the kustomize for single-arch
 
 ```
-❯ kustomize build manifests/overlays/single-arch --reorder none | oc apply -f -
+❯ kustomize build manifests/overlays/single-arch | oc apply -f -
+```
+
+4. Run the kustomize for multi-arch
+
+```
+❯ kustomize build manifests/overlays/multi-arch | oc apply -f -
 ```
 
 # Database loading
