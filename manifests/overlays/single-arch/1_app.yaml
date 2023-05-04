@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: acmeair-java
-        image: quay.io/cbade_cs/acmeair_test:acmeair-demo #IMAGE_NAME
+        image: quay.io/pbastide_rh/openshift-demo:acme-air-414 
         imagePullPolicy: Always
         env:
         - name: MONGO_MANUAL
@@ -32,7 +32,7 @@ spec:
             secretKeyRef:
               name: mongodb-creds
               key: username
-        - name: MONGO_USER
+        - name: MONGODB_PASS
           valueFrom:
             secretKeyRef:
               name: mongodb-creds
