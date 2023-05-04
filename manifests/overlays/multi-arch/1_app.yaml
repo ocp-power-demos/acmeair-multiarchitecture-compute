@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: acmeair-monolithic-java-deployment
+  namespace: acmeair
 spec:
   replicas: 1
   selector:
@@ -18,7 +19,7 @@ spec:
         node.openshift.io/os_id: rhcos
       containers:
       - name: acmeair-java
-        image: quay.io/cbade_cs/acmeair_test:acmeair-demo #IMAGE_NAME
+        image: quay.io/pbastide_rh/openshift-demo:acme-air-414  
         imagePullPolicy: Always
         env:
         - name: MONGO_MANUAL

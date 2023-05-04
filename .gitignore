@@ -8,3 +8,5 @@ bin/
 target
 **/target/*
 **/.env.secret
+cookie
+kustomize
