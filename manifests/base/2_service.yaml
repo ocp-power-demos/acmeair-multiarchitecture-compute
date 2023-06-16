@@ -8,9 +8,10 @@ metadata:
   namespace: acmeair
 spec:
   ports:
-  - protocol: TCP
-    port: 443
-    name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 9080
   selector:
     app: acmeair
     tier: monolithic

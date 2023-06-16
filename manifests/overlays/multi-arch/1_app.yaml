@@ -19,7 +19,7 @@ spec:
         node.openshift.io/os_id: rhcos
       containers:
       - name: acmeair-java
-        image: quay.io/pbastide_rh/openshift-demo:acme-air-414  
+        image: quay.io/pbastide_rh/openshift-demo:acme-air-414
         imagePullPolicy: Always
         env:
         - name: MONGO_MANUAL
