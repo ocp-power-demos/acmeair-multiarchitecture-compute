@@ -30,7 +30,7 @@ Note, the tests are commented out as they depend on out of data MongoDb test dep
 2. Create the MONGODB password and encode to base64. (an example)
 
 ```
-❯ export MONGODDB_PASS=$(echo NOT_REAL )
+❯ export MONGODDB_PASS=$(echo NOT_REAL)
 ```
 
 3. Run the kustomize for single-arch
