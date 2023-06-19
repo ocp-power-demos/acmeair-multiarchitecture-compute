@@ -13,6 +13,7 @@ resources:
 - 3_route.yaml
 - 4_autoscaler.yaml
 - 8_db_service.yaml
+- db-config-secret.yaml
 
 sortOptions:
     order: fifo
@@ -20,4 +21,4 @@ sortOptions:
 secretGenerator:
 - name: mongodb-creds
   envs:
-  - .env.secret
+  - env.secret

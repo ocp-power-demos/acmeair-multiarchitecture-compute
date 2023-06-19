@@ -6,7 +6,6 @@ namespace: acmeair
 
 resources:
 - ../../base
-- db-config-secret.yaml
 - pvc.yaml
 - app.yaml
 - db.yaml

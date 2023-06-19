@@ -6,9 +6,9 @@ namespace: acmeair
 
 resources:
 - ../../base
-- 1_app.yaml
-- 6_pvc.yaml
-- 7_db.yaml
+- app.yaml
+- pvc.yaml
+- db.yaml
 
 sortOptions:
    order: fifo
