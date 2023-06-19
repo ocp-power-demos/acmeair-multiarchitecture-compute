@@ -25,7 +25,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class BookingServiceImpl implements BookingService,  com.acmeair.mongo.Constants {
+public class BookingServiceImpl implements BookingService,com.acmeair.mongo.Constants {
 
   // private final static Logger logger =
   // Logger.getLogger(BookingService.class.getName());

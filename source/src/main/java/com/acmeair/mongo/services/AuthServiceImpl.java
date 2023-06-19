@@ -17,7 +17,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class AuthServiceImpl extends AuthService implements  com.acmeair.mongo.Constants {
+public class AuthServiceImpl extends AuthService implements com.acmeair.mongo.Constants {
 
   private MongoCollection<Document> customerSession;
 

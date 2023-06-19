@@ -10,6 +10,8 @@ The application depends on:
 > openliberty | latest | podman pull icr.io/appcafe/open-liberty:kernel-slim-java11-openj9-ubi
 > ubi-minimal | latest | podman pull registry.access.redhat.com/ubi8/ubi-minimal
 
+https://community.ibm.com/community/user/powerdeveloper/blogs/priya-seth/2023/04/05/open-source-containers-for-power-in-icr
+
 ### Build
 Use maven to build the project
  - git clone https://github.com/prb112/acmeair-monolithic-java
@@ -46,8 +48,10 @@ Note, the tests are commented out as they depend on out of data MongoDb test dep
 ```
 
 # Database loading
- - Go to the home page http://hostname:port
+ - Go to the home page https://hostname:port
  - At the bottom of the page, click the link : Configure the Acme Air Environment > Click **Load the database**
+
+ https://app-route-acmeair.apps.rdr-hdc-pbastide2.ocp-multiarch.xyz/loader.html
  
 # Driving the load
  - Follow the instruction [here](https://github.com/blueperf/acmeair-driver)
@@ -85,7 +89,7 @@ If you would like to see the detailed LICENSE click [here](LICENSE).
 # Support
 Is this a Red Hat or IBM supported solution?
 
-No. This is only an sample application for Mixed Architecture Compute.
+No. This is only an sample application for Multi Architecture Compute.
 
 # Notes
 The code may not use https://www.mongodb.com/docs/drivers/java/sync/current/fundamentals/connection/connect/

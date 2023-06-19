@@ -57,7 +57,7 @@ public class ConnectionManager implements Constants {
       MongoClientSettings.Builder builder = MongoClientSettings.builder();
       MongoClientSettings settings;
       if (user != null) {
-        MongoCredential credential = MongoCredential.createPlainCredential(user, dbname, pass.toCharArray());
+        MongoCredential credential = MongoCredential.createScramSha1Credential(user, dbname, pass.toCharArray());
         builder.credential(credential);
         
         settings = MongoClientSettings.builder()

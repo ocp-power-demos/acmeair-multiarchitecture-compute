@@ -15,6 +15,7 @@ package com.acmeair.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.time.Instant;
 
 import jakarta.inject.Inject;
 
@@ -41,8 +42,10 @@ public abstract class AuthService {
       JSONObject sessionJson = (JSONObject) new JSONParser().parse(cSession);
       String timeoutString = sessionJson.get("timeoutTime").toString();
       JSONObject timeJson = (JSONObject) new JSONParser().parse(timeoutString);
-
-      if (now.getTime() > (Long) timeJson.get("$date")) {
+      
+      Instant instant = Instant.parse(timeJson.get("$date").toString());
+      Date timestamp = Date.from(instant);
+      if (now.getTime() > timestamp.getTime()) {
         removeSession(cSession);
         return null;
       }

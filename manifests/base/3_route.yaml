@@ -1,13 +1,22 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: app-route
+  name: acmeair
   namespace: acmeair
   labels:
-    service: acmeair-monolithic-service
+    app: acmeair
+    tier: monolithic
+  annotations:
+    haproxy.router.openshift.io/timeout=120s
 spec:
+  subdomain: acmeair
   to:
     kind: Service
-    name: acmeair-monolithic-service
+    name: acmeair-http
+    weight: 100
   port:
-    targetPort: '9080'
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
