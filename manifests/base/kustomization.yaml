@@ -8,11 +8,11 @@ generatorOptions:
   disableNameSuffixHash: true
 
 resources:
-- 0_project.yaml
-- 2_service.yaml
-- 3_route.yaml
-- 4_autoscaler.yaml
-- 8_db_service.yaml
+- project.yaml
+- service.yaml
+- route.yaml
+- autoscaler.yaml
+- db-service.yaml
 - db-config-secret.yaml
 
 sortOptions:
