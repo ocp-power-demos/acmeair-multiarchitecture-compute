@@ -14,15 +14,21 @@ spec:
         app: acmeair
         tier: monolithic
     spec:
+      nodeSelector:
+        kubernetes.io/arch: ppc64le
+        node.openshift.io/os_id: rhcos
       containers:
       - name: acmeair-java
-        image: quay.io/pbastide_rh/openshift-demo:acme-air-414 
+        image: quay.io/pbastide_rh/openshift-demo:acme-air-414
         imagePullPolicy: Always
+        ports:
+        - containerPort: 9080
+        - containerPort: 9443
         env:
         - name: MONGO_MANUAL
           value: "true"
         - name: MONGO_HOST
-          value: "localhost"
+          value: "acmeair-db"
         - name: MONGO_PORT
           value: "27017"
         - name: MONGO_DBNAME
@@ -32,7 +38,7 @@ spec:
             secretKeyRef:
               name: mongodb-creds
               key: username
-        - name: MONGODB_PASS
+        - name: MONGO_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongodb-creds

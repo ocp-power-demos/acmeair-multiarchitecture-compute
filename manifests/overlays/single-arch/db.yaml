@@ -15,20 +15,25 @@ spec:
       labels:
         db: acmeair-db
     spec:
+      nodeSelector:
+        kubernetes.io/arch: ppc64le
+        node.openshift.io/os_id: rhcos
       containers:
       - image: icr.io/ppc64le-oss/mongodb-ppc64le:4.4.18
         name: acmeair-db
-        args: ["--dbpath","/data/db"]
+        args: ["--dbpath","/data/db", "--auth"] #acmeair
         ports:
         - containerPort: 27017
           protocol: TCP
         env:
-        - name: MONGO_INITDB_ROOT_USERNAME
+        - name: MONGO_INITDB_DATABASE
+          value: acmeair
+        - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongodb-creds
               key: username
-        - name: MONGO_INITDB_ROOT_PASSWORD
+        - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
             secretKeyRef:
               name: mongodb-creds
@@ -36,6 +41,8 @@ spec:
         volumeMounts:
         - mountPath: /data/db
           name: mongo-data
+        - mountPath: /docker-entrypoint-initdb.d/
+          name: mongodb-config
         securityContext:
           privileged: false
           seccompProfile:
@@ -71,4 +78,10 @@ spec:
       - name: mongo-data
         persistentVolumeClaim:
           claimName: mongodb-pvc
+      - name: mongodb-config
+        secret:
+          secretName: mongodb-config
+          items:
+          - key: acmeair.sh
+            path: acmeair.sh
       restartPolicy: Always

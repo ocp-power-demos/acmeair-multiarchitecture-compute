@@ -19,7 +19,7 @@ Use maven to build the project
  - cd source && mvn clean package && cd ..
 
 Note, if you are on a mac, you can setup maven using `brew install maven` and `dnf install -y maven.noarch java-11-openjdk.x86_64`
-Note, the tests are commented out as they depend on out of data MongoDb test dependencies.
+Note, the tests are commented out as they depend on out-of-date MongoDb test dependencies.
  
 ### Setup
 
@@ -35,28 +35,62 @@ Note, the tests are commented out as they depend on out of data MongoDb test dep
 ❯ export MONGODDB_PASS=$(echo NOT_REAL)
 ```
 
-3. Run the kustomize for single-arch
+3. Make a secret file that is going to get loaded.
+
+```
+❯ cat << EOF > /manifests/base/env.secret
+username=${MONGODB_USER}
+username=${MONGODB_PASS}
+```
+
+4. Run the kustomize for single-arch (PowerPC only)
 
 ```
 ❯ kustomize build manifests/overlays/single-arch | oc apply -f -
 ```
 
-4. Run the kustomize for multi-arch
+5. Run the kustomize for multi-arch (non-OpenStack)
 
 ```
 ❯ kustomize build manifests/overlays/multi-arch | oc apply -f -
 ```
 
-# Database loading
- - Go to the home page https://hostname:port
- - At the bottom of the page, click the link : Configure the Acme Air Environment > Click **Load the database**
+5. Run the kustomize for multi-arch (OpenStack)
 
- https://app-route-acmeair.apps.rdr-hdc-pbastide2.ocp-multiarch.xyz/loader.html
- 
-# Driving the load
- - Follow the instruction [here](https://github.com/blueperf/acmeair-driver)
- - Use performance/acmeair.jmx 
- - jmeter -n -t performance/acmeair.jmx -DusePureIDs=true -JHOST=hostname -JPORT=80 -j logName -JTHREAD=1 -JUSER=999 -JDURATION=60 -JRAMP=0 ;
+```
+❯ kustomize build manifests/overlays/multi-arch-openstack | oc apply -f -
+```
+
+Note, you may need to run `oc apply -f manifests/overlays/multi-arch-openstack/storageclass.yaml`.
+
+### Database Load
+
+1. Find the Route to the AcmeAir Route
+
+```
+❯ export ACMEAIR_ROUTE=$(oc get route acmeair -ojsonpath='{.status.ingress[0].host}')
+```
+
+2. Find the Path to the Loader and open the URL
+
+```
+❯ echo "https://${ACMEAIR_ROUTE}/loader.html"
+https://acmeair.local.ocp-multiarch.xyz/loader.html
+```
+
+3. Click **Load the database**
+
+4. Confirm the Successful Load. You should see no HTTP error codes.
+
+## Use
+
+1. Navigate to index.html
+
+2. Click Login
+
+3. Enter uid0@email.com and Click OK
+
+4. Try Booking and Canceling a Flight
 
 ## Contributing
 
