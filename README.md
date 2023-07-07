@@ -1,16 +1,16 @@
-### Acme Air Monolith Sample and Benchmark for MongoDB
+### Acme Air Sample Application for Multi-architecture Compute
 
-This application shows an implementation of a fictitious airline called "Acme Air" to exercise OpenLiberty JEE Profile with MongoDB as a datastore.
+This application shows an implementation of a fictitious airline called "Acme Air" to exercise OpenLiberty JEE Profile with MongoDB as a datastore. This repository is used to highlight various Multi-architecture compute scenarios.
 
 The application is forked from https://github.com/blueperf/acmeair-monolithic-java
 
 The application depends on: 
 
-> mongodb     | 4.4.18 | podman pull icr.io/ppc64le-oss/mongodb-ppc64le:4.4.18
-> openliberty | latest | podman pull icr.io/appcafe/open-liberty:kernel-slim-java11-openj9-ubi
-> ubi-minimal | latest | podman pull registry.access.redhat.com/ubi8/ubi-minimal
-
-https://community.ibm.com/community/user/powerdeveloper/blogs/priya-seth/2023/04/05/open-source-containers-for-power-in-icr
+```
+mongodb     | 4.4.18 | podman pull icr.io/ppc64le-oss/mongodb-ppc64le:4.4.18
+openliberty | latest | podman pull icr.io/appcafe/open-liberty:kernel-slim-java11-openj9-ubi
+ubi-minimal | latest | podman pull registry.access.redhat.com/ubi8/ubi-minimal
+```
 
 ### Build
 Use maven to build the project
@@ -170,3 +170,4 @@ No. This is only an sample application for Multi Architecture Compute.
 # Notes
 The code may not use https://www.mongodb.com/docs/drivers/java/sync/current/fundamentals/connection/connect/
 Thanks for DevOpsCube for https://devopscube.com/deploy-mongodb-kubernetes/
+[link to the Power Container Registry](https://community.ibm.com/community/user/powerdeveloper/blogs/priya-seth/2023/04/05/open-source-containers-for-power-in-icr)
