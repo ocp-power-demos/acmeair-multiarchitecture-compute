@@ -23,63 +23,95 @@ Note, the tests are commented out as they depend on out-of-date MongoDb test dep
  
 ### Setup
 
-1. Create the MONGODB user and encode to base64.
+1. Clone this repository 
 
 ```
-❯ export MONGODB_USER=$(echo admin)
+❯ git clone https://github.com/prb112/acmeair-monolithic-java.git
 ```
 
-2. Create the MONGODB password and encode to base64. (an example)
+2. Create the MONGODB user and encode to base64.
 
 ```
-❯ export MONGODDB_PASS=$(echo NOT_REAL)
+❯ export MONGODB_USER=admin
 ```
 
-3. Make a secret file that is going to get loaded.
+3. Create the MONGODB password and encode to base64. (an example of admin)
 
 ```
-❯ cat << EOF > /manifests/base/env.secret
+❯ export MONGODDB_PASS=admin
+```
+
+4. Make a secret file that is going to get loaded.
+
+```
+❯ cat << EOF > ./manifests/base/env.secret
 username=${MONGODB_USER}
-username=${MONGODB_PASS}
+password=${MONGODB_PASS}
+EOF
 ```
 
-4. Run the kustomize for single-arch (PowerPC only)
+5. Download kustomize from [https://github.com/kubernetes-sigs/kustomize/releases/latest](https://github.com/kubernetes-sigs/kustomize/releases/latest)
 
 ```
-❯ kustomize build manifests/overlays/single-arch | oc apply -f -
+❯ curl -o kustomize.tar.gz -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.1.0/kustomize_v5.1.0_darwin_amd64.tar.gz
+❯ tar xvf kustomize_v5.1.0_darwin_amd64.tar.gz
 ```
 
-5. Run the kustomize for multi-arch (non-OpenStack)
+6. Run the kustomize for single-arch (PowerPC only)
+
+```
+❯ ./kustomize build manifests/overlays/single-arch-power | oc apply -f -
+```
+
+7. Run the kustomize for multi-arch (non-OpenStack)
 
 ```
 ❯ kustomize build manifests/overlays/multi-arch | oc apply -f -
 ```
 
-5. Run the kustomize for multi-arch (OpenStack)
+8. Run the kustomize for multi-arch (OpenStack)
 
 ```
 ❯ kustomize build manifests/overlays/multi-arch-openstack | oc apply -f -
 ```
 
-6. Run the kustomize for multi-arch (PowerVS) using EmptyDir
+9. Run the kustomize for multi-arch (PowerVS) using EmptyDir
 
 ```
 ❯ kustomize build manifests/overlays/multi-arch-powervs-empty | oc apply -f -
+```
+
+10. Run the kustomize for single-arch (Intel only)
+
+```
+❯ kustomize build manifests/overlays/single-arch-intel | oc apply -f -
+project.project.openshift.io/acmeair created
+service/acmeair-http created
+service/acmeair-https created
+route.route.openshift.io/acmeair created
+horizontalpodautoscaler.autoscaling/acmeair-java-autoscaler created
+service/acmeair-db created
+secret/mongodb-config created
+secret/mongodb-creds created
+deployment.apps/acmeair-monolithic-java-deployment created
+deployment.apps/acmeair-db created
 ```
 
 This one uses an empty dir, when the Pod is destroyed the local data is destroyed.
 
 Note, you may need to run `oc apply -f manifests/overlays/multi-arch-openstack/storageclass.yaml`.
 
+If the app does not work, make sure you setup the .env.secret file.
+
 ### Database Load
 
 1. Find the Route to the AcmeAir Route
 
 ```
-❯ export ACMEAIR_ROUTE=$(oc get route acmeair -ojsonpath='{.status.ingress[0].host}')
+❯ export ACMEAIR_ROUTE=$(oc get route acmeair -ojsonpath='{.status.ingress[0].host}' -n acmeair)
 ```
 
-2. Find the Path to the Loader and open the URL
+2. Find the Path to the Loader and open the URL. You must use https://
 
 ```
 ❯ echo "https://${ACMEAIR_ROUTE}/loader.html"
@@ -89,6 +121,8 @@ https://acmeair.local.ocp-multiarch.xyz/loader.html
 3. Click **Load the database**
 
 4. Confirm the Successful Load. You should see no HTTP error codes.
+
+Note, you'll need to Accept any Certificate Warning.
 
 ## Use
 
