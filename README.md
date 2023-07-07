@@ -57,31 +57,7 @@ EOF
 ❯ tar xvf kustomize_v5.1.0_darwin_amd64.tar.gz
 ```
 
-6. Run the kustomize for single-arch (PowerPC only)
-
-```
-❯ ./kustomize build manifests/overlays/single-arch-power | oc apply -f -
-```
-
-7. Run the kustomize for multi-arch (non-OpenStack)
-
-```
-❯ kustomize build manifests/overlays/multi-arch | oc apply -f -
-```
-
-8. Run the kustomize for multi-arch (OpenStack)
-
-```
-❯ kustomize build manifests/overlays/multi-arch-openstack | oc apply -f -
-```
-
-9. Run the kustomize for multi-arch (PowerVS) using EmptyDir
-
-```
-❯ kustomize build manifests/overlays/multi-arch-powervs-empty | oc apply -f -
-```
-
-10. Run the kustomize for single-arch (Intel only)
+6. Run the kustomize for single-arch (Intel only) and does not use node-selectors. This use-case is single architecture Intel only without nodeSelectors. It will fail when scheduled on a Power node.
 
 ```
 ❯ kustomize build manifests/overlays/single-arch-intel | oc apply -f -
@@ -95,6 +71,30 @@ secret/mongodb-config created
 secret/mongodb-creds created
 deployment.apps/acmeair-monolithic-java-deployment created
 deployment.apps/acmeair-db created
+```
+
+7. Run the kustomize for single-arch (PowerPC only). This use-case is single architecture Power only with nodeSelectors so that it will not run on Intel.
+
+```
+❯ ./kustomize build manifests/overlays/single-arch-power | oc apply -f -
+```
+
+8. Run the kustomize for multi-arch (non-OpenStack)
+
+```
+❯ kustomize build manifests/overlays/multi-arch | oc apply -f -
+```
+
+9. Run the kustomize for multi-arch (OpenStack)
+
+```
+❯ kustomize build manifests/overlays/multi-arch-openstack | oc apply -f -
+```
+
+10. Run the kustomize for multi-arch (PowerVS) using EmptyDir
+
+```
+❯ kustomize build manifests/overlays/multi-arch-powervs-empty | oc apply -f -
 ```
 
 This one uses an empty dir, when the Pod is destroyed the local data is destroyed.
