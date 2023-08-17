@@ -97,6 +97,12 @@ deployment.apps/acmeair-db created
 ❯ kustomize build manifests/overlays/multi-arch-powervs-empty | oc apply -f -
 ```
 
+11. Run the kustomize for ibmcloud using nfs
+
+```
+❯ kustomize build manifests/overlays/ibmcloud | oc apply -f -
+```
+
 This one uses an empty dir, when the Pod is destroyed the local data is destroyed.
 
 Note, you may need to run `oc apply -f manifests/overlays/multi-arch-openstack/storageclass.yaml`.
