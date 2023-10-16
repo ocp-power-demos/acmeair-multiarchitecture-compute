@@ -2,7 +2,7 @@
 
 This application shows an implementation of a fictitious airline called "Acme Air" to exercise OpenLiberty JEE Profile with MongoDB as a datastore. This repository is used to highlight various Multi-architecture compute scenarios.
 
-The application is forked from https://github.com/blueperf/acmeair-monolithic-java
+The application is forked from https://github.com/blueperf/acmeair-multiarchitecture-compute
 
 The application depends on: 
 
@@ -14,8 +14,8 @@ ubi-minimal | latest | podman pull registry.access.redhat.com/ubi8/ubi-minimal
 
 ### Build
 Use maven to build the project
- - git clone https://github.com/prb112/acmeair-monolithic-java
- - cd acmeair-monolithic-java
+ - git clone https://github.com/ocp-power-demos/acmeair-multiarchitecture-compute
+ - cd acmeair-multiarchitecture-compute
  - cd source && mvn clean package && cd ..
 
 Note, if you are on a mac, you can setup maven using `brew install maven` and `dnf install -y maven.noarch java-11-openjdk.x86_64`
@@ -26,7 +26,7 @@ Note, the tests are commented out as they depend on out-of-date MongoDb test dep
 1. Clone this repository 
 
 ```
-❯ git clone https://github.com/prb112/acmeair-monolithic-java.git
+❯ git clone https://github.com/ocp-power-demos/acmeair-multiarchitecture-compute.git
 ```
 
 2. Create the MONGODB user and encode to base64.
@@ -69,7 +69,7 @@ horizontalpodautoscaler.autoscaling/acmeair-java-autoscaler created
 service/acmeair-db created
 secret/mongodb-config created
 secret/mongodb-creds created
-deployment.apps/acmeair-monolithic-java-deployment created
+deployment.apps/acmeair-multiarchitecture-compute-deployment created
 deployment.apps/acmeair-db created
 ```
 
