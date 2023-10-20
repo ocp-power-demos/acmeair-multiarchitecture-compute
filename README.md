@@ -32,21 +32,21 @@ Note, the tests are commented out as they depend on out-of-date MongoDb test dep
 2. Create the MONGODB user and encode to base64.
 
 ```
-❯ export MONGODB_USER=admin
+❯ export MONGO_INITDB_ROOT_USERNAME=admin
 ```
 
 3. Create the MONGODB password and encode to base64. (an example of admin)
 
 ```
-❯ export MONGODDB_PASS=admin
+❯ export MONGO_INITDB_ROOT_PASSWORD=admin
 ```
 
 4. Make a secret file that is going to get loaded.
 
 ```
 ❯ cat << EOF > ./manifests/base/env.secret
-username=${MONGODB_USER}
-password=${MONGODB_PASS}
+username=${MONGO_INITDB_ROOT_USERNAME}
+password=${MONGO_INITDB_ROOT_PASSWORD}
 EOF
 ```
 
@@ -54,7 +54,7 @@ EOF
 
 ```
 ❯ curl -o kustomize.tar.gz -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.1.0/kustomize_v5.1.0_darwin_amd64.tar.gz
-❯ tar xvf kustomize_v5.1.0_darwin_amd64.tar.gz
+❯ tar xvf kustomize.tar.gz
 ```
 
 6. Run the kustomize for single-arch (Intel only) and does not use node-selectors. This use-case is single architecture Intel only without nodeSelectors. It will fail when scheduled on a Power node.
